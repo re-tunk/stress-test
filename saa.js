@@ -17,11 +17,12 @@ export let options = {
   }
 
   const fileData = open(filePath, 'b');
-  const fileName = 'testFile';
+  const fileName = 'test-file';
   const mimeType = 'text/plain';
   const workAreaId = 1000;
   const timeToCreateNewWALInSec = 60*3
   const timeToStartWALInSec = 10;
+  const templateId = "kemmler";
 
   const host = "http://localhost:50068";
   const endpointFindWalByState = "/workAreaLayouts/search/findByWorkAreaAndState";
@@ -65,6 +66,11 @@ export default function () {
 export function createWalFile(walId, title) {
   const fRes = http.post(`${host}/workAreaLayouts/${walId}/files`,JSON.stringify({
     title: title,
+    additionalData: {
+      convertionData: {
+        templateId: templateId
+      }
+    }
   }),{
     headers: {'Content-Type': 'application/json','Authorization': `Bearer ${getToken()}`},
   });
